@@ -8,6 +8,7 @@ select
 
 from tb_products
 
-group by product_category_name
+-- filtra ANTES do agrupamento
+where product_description_lenght > 100
 
-HAVING product_description_lenght > 100
+group by product_category_name
