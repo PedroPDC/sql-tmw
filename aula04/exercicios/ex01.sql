@@ -3,7 +3,7 @@
 -- Considere a base completa, com apenas pedidos entregues (tb_orders - order_status = 'delivered'
 
 /*Anotações:
-total de receita -> tb_order_items - soma do price
+total de receita POR cliente -> tb_order_items - soma do price / contagem distinta dos customers_id
 clientes por estado -> tb_customers
 pedidos entregues -> tb_orders - order_status = 'delivered'
 */
@@ -11,7 +11,8 @@ pedidos entregues -> tb_orders - order_status = 'delivered'
 
 SELECT
     t2.customer_state,
-    sum(t3.price) as receita 
+    sum(t3.price) as receita_total_estado,
+    round(sum(t3.price) / count(DISTINCT t1.customer_id), 2) as avg_receita_cliente
 
 FROM tb_orders as t1
 
@@ -24,4 +25,4 @@ ON t1.order_id = t3.order_id
 WHERE t1.order_status = 'delivered'
 
 GROUP BY t2.customer_state
-ORDER BY sum(t3.price) DESC
+ORDER BY sum(t3.price) / count(DISTINCT t1.customer_id) DESC
