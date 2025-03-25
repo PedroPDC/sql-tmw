@@ -9,7 +9,9 @@ pedidos entregues -> tb_orders - order_status = 'delivered'
 
 SELECT
     t2.seller_state,
-    sum(t1.price) as receita
+    sum(t1.price) as receita_total,
+    round( sum(t1.price) / count(DISTINCT t1.seller_id), 2) as avg_receita_seller,
+    count(DISTINCT t1.seller_id) as qtde_sellers
 
 FROM tb_order_items as t1
 
@@ -21,5 +23,4 @@ ON t1.order_id = t3.order_id
 
 WHERE t3.order_status = 'delivered'
 
-GROUP BY seller_state
-ORDER BY sum(t1.price) DESC
+GROUP BY t2.seller_state
