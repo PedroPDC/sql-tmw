@@ -27,4 +27,3 @@ WHERE t4.order_status = 'delivered'
 AND CAST( strftime('%Y', t4.order_approved_at) as int) = 2017
 
 GROUP BY t3.seller_state
-ORDER BY round( avg(t2.product_weight_g), 2) DESC
